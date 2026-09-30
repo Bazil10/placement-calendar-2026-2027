@@ -1,7 +1,6 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // Enable PWA-style app headers
   async headers() {
     return [
       {
@@ -13,11 +12,6 @@ const nextConfig: NextConfig = {
         ],
       },
     ]
-  },
-  experimental: {
-    serverActions: {
-      allowedOrigins: ['localhost:3000'],
-    },
   },
 }
 
