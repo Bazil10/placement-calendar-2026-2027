@@ -11,10 +11,11 @@ interface UseDrivesOptions {
 }
 
 export function useDrives(options: UseDrivesOptions = {}) {
-  const [drives, setDrives]     = useState<Drive[]>([])
-  const [loading, setLoading]   = useState(true)
-  const [error, setError]       = useState<string | null>(null)
-  const [isPending, startTransition] = useTransition()
+  const { status, dateFrom, dateTo } = options
+  const [drives, setDrives]               = useState<Drive[]>([])
+  const [loading, setLoading]             = useState(true)
+  const [error, setError]                 = useState<string | null>(null)
+  const [isPending, startTransition]      = useTransition()
 
   const fetchDrives = useCallback(async () => {
     setLoading(true)
@@ -26,18 +27,14 @@ export function useDrives(options: UseDrivesOptions = {}) {
       .select('*')
       .order('assigned_date', { ascending: true })
 
-    if (options.status && options.status !== 'all') {
-      query = query.eq('status', options.status)
-    } else if (!options.status) {
+    if (status && status !== 'all') {
+      query = query.eq('status', status)
+    } else {
       query = query.neq('status', 'cancelled')
     }
 
-    if (options.dateFrom) {
-      query = query.gte('assigned_date', options.dateFrom)
-    }
-    if (options.dateTo) {
-      query = query.lte('assigned_date', options.dateTo)
-    }
+    if (dateFrom) query = query.gte('assigned_date', dateFrom)
+    if (dateTo)   query = query.lte('assigned_date', dateTo)
 
     const { data, error: fetchError } = await query
 
@@ -47,7 +44,8 @@ export function useDrives(options: UseDrivesOptions = {}) {
       setDrives((data as Drive[]) || [])
     }
     setLoading(false)
-  }, [options.status, options.dateFrom, options.dateTo])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, dateFrom, dateTo])
 
   useEffect(() => {
     fetchDrives()
@@ -58,21 +56,17 @@ export function useDrives(options: UseDrivesOptions = {}) {
     const supabase = createClient()
 
     const channel = supabase
-      .channel('drives-changes')
+      .channel('drives-realtime')
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'drives' },
         () => {
-          startTransition(() => {
-            fetchDrives()
-          })
+          startTransition(() => { fetchDrives() })
         }
       )
       .subscribe()
 
-    return () => {
-      supabase.removeChannel(channel)
-    }
+    return () => { supabase.removeChannel(channel) }
   }, [fetchDrives])
 
   return {
