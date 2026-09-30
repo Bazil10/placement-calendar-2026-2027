@@ -20,11 +20,24 @@ export const metadata: Metadata = {
     apple: '/icons/icon-192.png',
     icon: '/icons/icon-192.png',
   },
-  other: {
-    'mobile-web-app-capable': 'yes',
-    'apple-touch-fullscreen': 'yes',
-  },
 }
 export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
+  themeColor: '#001e2b',
+  themeColor: [{ color: '#001e2b' }],
+}
+export default function RootLayout({
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="PlaceDrive" />
+        <meta name="mobile-web-app-capable" content="yes" />
+      </head>
+      <body className="font-sans bg-surface text-ink antialiased">
+        {children}
+    </html>
   )
 }
