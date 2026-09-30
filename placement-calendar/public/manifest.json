@@ -1,0 +1,39 @@
+{
+  "name": "Placement Drive Calendar",
+  "short_name": "PlaceDrive",
+  "description": "Campus Placement Drive Calendar for scheduling and tracking company drives",
+  "theme_color": "#001e2b",
+  "background_color": "#001e2b",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "start_url": "/",
+  "categories": ["productivity", "education"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Fixed Calendar",
+      "url": "/?view=fixed",
+      "description": "View confirmed fixed placement drives"
+    },
+    {
+      "name": "Tentative Calendar",
+      "url": "/?view=tentative",
+      "description": "View tentative placement drives"
+    }
+  ]
+}
