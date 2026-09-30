@@ -2,9 +2,9 @@ import React from 'react';
 
 export default function Home() {
   return (
-    <main className="min-h-screen p-8 flex flex-col items-center justify-center">
-      <h1 className="text-3xl font-bold">Placement Drive Calendar 2026–2027</h1>
-      <p className="mt-2 text-gray-600">Application successfully initialized.</p>
+    <main style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif' }}>
+      <h1>Placement Drive Calendar 2026–2027</h1>
+      <p>App running successfully.</p>
     </main>
   );
 }
